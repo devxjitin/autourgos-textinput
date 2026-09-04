@@ -31,11 +31,9 @@ Quick start::
 
 from .gui import TextInputBox, TextInputError, TextInputUnavailableError
 
-try:
-    from importlib.metadata import version as _v
-    __version__ = _v("autourgos-textinput")
-except Exception:
-    __version__ = "0.1.0"
+from autourgos_core import package_version
+
+__version__ = package_version("autourgos-textinput", fallback="0.1.3")
 
 __all__ = [
     "TextInputBox",

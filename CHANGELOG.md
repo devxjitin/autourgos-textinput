@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- Internal: `__version__` resolution moved to `autourgos_core.package_version()` (bumped `autourgos-core>=0.3.0`). No functional change.
+
 ## 0.1.2
 
 - Internal: `_load_deps()`'s import-probing logic moved to `autourgos_core.try_import()` (new `autourgos-core>=0.1.0` dependency), and `_require_available()`'s conditional-raise moved to `autourgos_core.require_available()`. No behavior change -- error messages stay identical.
