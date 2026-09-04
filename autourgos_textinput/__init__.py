@@ -33,7 +33,7 @@ from .gui import TextInputBox, TextInputError, TextInputUnavailableError
 
 from autourgos_core import package_version
 
-__version__ = package_version("autourgos-textinput", fallback="0.1.3")
+__version__ = package_version("autourgos-textinput", fallback="0.1.4")
 
 __all__ = [
     "TextInputBox",

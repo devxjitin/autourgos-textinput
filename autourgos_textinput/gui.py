@@ -23,11 +23,10 @@ Architecture:
 
 from __future__ import annotations
 
-import queue
 import threading
 from typing import Any, Callable, Optional, Tuple
 
-from autourgos_core import require_available, try_import
+from autourgos_core import PendingCallableQueue, require_available, try_import
 
 _DEFAULT_HOTKEY = "<ctrl>+<alt>+space"
 _DEFAULT_TITLE = "Autourgos Input"
@@ -99,7 +98,7 @@ class TextInputBox:
         self.width = width
 
         self._root: Any = None
-        self._queue: "queue.Queue[Callable[[], None]]" = queue.Queue()
+        self._queue = PendingCallableQueue()
         self._listener: Any = None
         self._running = False
 
@@ -112,7 +111,7 @@ class TextInputBox:
 
     def _post(self, fn: Callable[[], None]) -> None:
         """Schedule `fn` to run on the Tk thread (internal -- used by the hotkey callback and stop())."""
-        self._queue.put(fn)
+        self._queue.post(fn)
 
     def start(self) -> None:
         """
@@ -154,12 +153,7 @@ class TextInputBox:
             self._root.destroy()
 
     def _poll_queue(self) -> None:
-        try:
-            while True:
-                fn = self._queue.get_nowait()
-                fn()
-        except queue.Empty:
-            pass
+        self._queue.drain()
         if self._running and self._root is not None:
             self._root.after(50, self._poll_queue)
 

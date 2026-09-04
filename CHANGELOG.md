@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- Internal: `TextInputBox`'s queue-post/drain internals migrated to `autourgos_core.PendingCallableQueue`. No functional change. Bumped `autourgos-core>=0.10.0`.
+
 ## 0.1.3
 
 - Internal: `__version__` resolution moved to `autourgos_core.package_version()` (bumped `autourgos-core>=0.3.0`). No functional change.
