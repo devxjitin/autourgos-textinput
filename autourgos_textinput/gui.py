@@ -27,6 +27,8 @@ import queue
 import threading
 from typing import Any, Callable, Optional, Tuple
 
+from autourgos_core import require_available, try_import
+
 _DEFAULT_HOTKEY = "<ctrl>+<alt>+space"
 _DEFAULT_TITLE = "Autourgos Input"
 
@@ -41,18 +43,16 @@ class TextInputUnavailableError(TextInputError):
 
 def _load_deps() -> Tuple[bool, Any, Any, Optional[str]]:
     """Try to import tkinter and pynput.keyboard. Returns (available, tkinter module, pynput.keyboard module, error)."""
-    try:
-        import tkinter as _tkinter
-    except ImportError as exc:
-        return False, None, None, f"tkinter is not available: {exc}"
-    try:
-        from pynput import keyboard as _pynput_keyboard
-    except ImportError as exc:
+    tk_available, tk_modules, tk_error = try_import("tkinter")
+    if not tk_available:
+        return False, None, None, f"tkinter is not available: {tk_error}"
+    kb_available, kb_modules, kb_error = try_import("pynput.keyboard")
+    if not kb_available:
         return False, None, None, (
             "The 'pynput' package is required for the global hotkey listener "
-            f"(pip install autourgos-textinput[gui]). Import error: {exc}"
+            f"(pip install autourgos-textinput[gui]). Import error: {kb_error}"
         )
-    return True, _tkinter, _pynput_keyboard, None
+    return True, tk_modules["tkinter"], kb_modules["pynput.keyboard"], None
 
 
 class TextInputBox:
@@ -104,10 +104,11 @@ class TextInputBox:
         self._running = False
 
     def _require_available(self) -> None:
-        if not self._available:
-            raise TextInputUnavailableError(
-                f"autourgos-textinput is unavailable. Detail: {self._import_error}"
-            )
+        require_available(
+            self._available,
+            f"autourgos-textinput is unavailable. Detail: {self._import_error}",
+            TextInputUnavailableError,
+        )
 
     def _post(self, fn: Callable[[], None]) -> None:
         """Schedule `fn` to run on the Tk thread (internal -- used by the hotkey callback and stop())."""

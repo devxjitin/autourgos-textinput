@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Internal: `_load_deps()`'s import-probing logic moved to `autourgos_core.try_import()` (new `autourgos-core>=0.1.0` dependency), and `_require_available()`'s conditional-raise moved to `autourgos_core.require_available()`. No behavior change -- error messages stay identical.
+
 ## 0.1.1
 
 - **Removed scope creep: `show_message()` and `run_with_agent()`.** This package was built to only capture input via a hotkey-triggered popup and hand it to a callback -- it should never have grown a second "response" popup or auto-display logic. Neither was asked for; corrected. `TextInputBox` now only ever shows the one input popup; displaying a result is left entirely to the caller (or a separate, not-yet-built output package). `.post()` was internal-only anyway (renamed `_post()`) since it existed solely to support the removed response popup.

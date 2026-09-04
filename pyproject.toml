@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autourgos-textinput"
-version = "0.1.1"
+version = "0.1.2"
 description = "Global-hotkey-triggered Tkinter popup text input for the Autourgos framework -- press a shortcut, type, and hand the text to an agent."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -34,7 +34,9 @@ classifiers = [
     "Topic :: Software Development :: User Interfaces",
     "Typing :: Typed",
 ]
-dependencies = []
+dependencies = [
+    "autourgos-core>=0.1.0",
+]
 
 [project.optional-dependencies]
 gui = [
