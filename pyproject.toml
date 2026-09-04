@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autourgos-textinput"
+version = "0.1.1"
+description = "Global-hotkey-triggered Tkinter popup text input for the Autourgos framework -- press a shortcut, type, and hand the text to an agent."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Jitin Kumar Sengar", email = "devxjitin@gmail.com" },
+]
+maintainers = [
+    {name = "Sonia"},
+    {name = "Vishwanil Suman"},
+]
+keywords = [
+    "autourgos", "gui", "tkinter", "hotkey", "global-hotkey",
+    "text-input", "voice", "agent", "llm", "ai",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: User Interfaces",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+gui = [
+    "pynput>=1.7",
+]
+dev = [
+    "pytest>=7.0",
+    "pynput>=1.7",
+    "build",
+    "twine",
+]
+
+[project.urls]
+Homepage = "https://github.com/devxjitin/autourgos-textinput"
+Repository = "https://github.com/devxjitin/autourgos-textinput"
+Issues = "https://github.com/devxjitin/autourgos-textinput/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["autourgos_textinput*"]
+
+[tool.setuptools.package-data]
+autourgos_textinput = ["py.typed"]
